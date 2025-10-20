@@ -2,13 +2,14 @@
 {
     public class BudgetViewDto
     {
-        public int BudgetId { get; set; }
+        public int Id { get; set; }
         public decimal BudgetAmount { get; set; }
-        public string Currency { get; set; } = "BGN";
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime ModifiedAt { get; set; }
 
-        //logic will be incorporated in service/controller
+        // Calculated fields (logic will be incorporated in service/controller)
         public decimal SpentAmount { get; set; }
         public decimal IncomeAmount { get; set; }
         public decimal RemainingAmount { get; set; }

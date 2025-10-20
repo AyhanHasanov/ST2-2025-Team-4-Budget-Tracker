@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\ST2\\ASP Net Core\\BudgetTracker\\BudgetTracker.csproj": {}
+    "C:\\Users\\Ayhan\\Documents\\Budget Tracker App\\ST2-2025-Team-4-TBD\\ASP Net Core\\BudgetTracker\\BudgetTracker.csproj": {}
   },
   "projects": {
-    "D:\\ST2\\ASP Net Core\\BudgetTracker\\BudgetTracker.csproj": {
+    "C:\\Users\\Ayhan\\Documents\\Budget Tracker App\\ST2-2025-Team-4-TBD\\ASP Net Core\\BudgetTracker\\BudgetTracker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ST2\\ASP Net Core\\BudgetTracker\\BudgetTracker.csproj",
+        "projectUniqueName": "C:\\Users\\Ayhan\\Documents\\Budget Tracker App\\ST2-2025-Team-4-TBD\\ASP Net Core\\BudgetTracker\\BudgetTracker.csproj",
         "projectName": "BudgetTracker",
-        "projectPath": "D:\\ST2\\ASP Net Core\\BudgetTracker\\BudgetTracker.csproj",
-        "packagesPath": "C:\\Users\\NiA\\.nuget\\packages\\",
-        "outputPath": "D:\\ST2\\ASP Net Core\\BudgetTracker\\obj\\",
+        "projectPath": "C:\\Users\\Ayhan\\Documents\\Budget Tracker App\\ST2-2025-Team-4-TBD\\ASP Net Core\\BudgetTracker\\BudgetTracker.csproj",
+        "packagesPath": "C:\\Users\\Ayhan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Ayhan\\Documents\\Budget Tracker App\\ST2-2025-Team-4-TBD\\ASP Net Core\\BudgetTracker\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\NiA\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Ayhan\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -44,7 +44,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net8.0": {
@@ -100,7 +100,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
