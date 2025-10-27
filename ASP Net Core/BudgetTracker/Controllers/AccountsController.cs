@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims; 
 using System.Threading.Tasks;
-using BudgetTracker.Data;
 using BudgetTracker.Models.DTOs.Account;
-using BudgetTracker.Models.Entities;
+using BudgetTracker.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace BudgetTracker.Controllers
 {
@@ -16,11 +13,11 @@ namespace BudgetTracker.Controllers
     [ApiController]
     public class AccountsController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IAccountService _accountService;
 
-        public AccountsController(AppDbContext context)
+        public AccountsController(IAccountService accountService)
         {
-            _context = context;
+            _accountService = accountService;
         }
 
         // 1. GET ALL: /api/Accounts
@@ -28,19 +25,7 @@ namespace BudgetTracker.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<AccountViewDto>>> GetAccounts()
         {
-            var accounts = await _context.Accounts.ToListAsync();
-
-            var accountDtos = accounts.Select(a => new AccountViewDto
-            {
-                Id = a.Id,
-                Name = a.Name,
-                Currency = a.Currency,
-                Balance = a.Balance,
-                Description = a.Description,
-                CreatedAt = a.CreatedAt,
-                ModifiedAt = a.ModifiedAt
-            }).ToList();
-
+            var accountDtos = await _accountService.GetAllAccountsAsync();
             return Ok(accountDtos);
         }
 
@@ -50,23 +35,12 @@ namespace BudgetTracker.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<AccountViewDto>> GetAccount(int id)
         {
-            var account = await _context.Accounts.FindAsync(id);
+            var accountDto = await _accountService.GetAccountByIdAsync(id);
 
-            if (account == null)
+            if (accountDto == null)
             {
                 return NotFound();
             }
-
-            var accountDto = new AccountViewDto
-            {
-                Id = account.Id,
-                Name = account.Name,
-                Currency = account.Currency,
-                Balance = account.Balance,
-                Description = account.Description,
-                CreatedAt = account.CreatedAt,
-                ModifiedAt = account.ModifiedAt
-            };
 
             return Ok(accountDto);
         }
@@ -78,36 +52,11 @@ namespace BudgetTracker.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> PutAccount(int id, UpdateAccountDto updateDto)
         {
-            var existingAccount = await _context.Accounts.FindAsync(id);
+            var updated = await _accountService.UpdateAccountAsync(id, updateDto);
 
-            if (existingAccount == null)
+            if (!updated)
             {
                 return NotFound();
-            }
-
-            existingAccount.Name = updateDto.Name;
-            existingAccount.Currency = updateDto.Currency;
-            
-            existingAccount.Balance = updateDto.Balance;
-            existingAccount.Description = updateDto.Description;
-            existingAccount.ModifiedAt = DateTime.UtcNow;
-
-            _context.Entry(existingAccount).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AccountExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
             }
 
             return NoContent();
@@ -120,37 +69,15 @@ namespace BudgetTracker.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)] 
         public async Task<ActionResult<AccountViewDto>> PostAccount(CreateAccountDto createDto)
         {
-            
             string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(currentUserId))
             {
                 return Unauthorized();
             }
 
-            var account = new Account
-            {
-                Name = createDto.Name,
-                Currency = createDto.Currency,
-                Balance = createDto.Balance,
-                Description = createDto.Description,
-                UserId = currentUserId 
-            };
+            var createdDto = await _accountService.CreateAccountAsync(createDto, currentUserId);
 
-            _context.Accounts.Add(account);
-            await _context.SaveChangesAsync();
-
-            var createdDto = new AccountViewDto
-            {
-                Id = account.Id,
-                Name = account.Name,
-                Currency = account.Currency,
-                Balance = account.Balance,
-                Description = account.Description,
-                CreatedAt = account.CreatedAt,
-                ModifiedAt = account.ModifiedAt
-            };
-
-            return CreatedAtAction(nameof(GetAccount), new { id = account.Id }, createdDto);
+            return CreatedAtAction(nameof(GetAccount), new { id = createdDto.Id }, createdDto);
         }
 
         // 5. DELETE: /api/Accounts/5
@@ -159,21 +86,13 @@ namespace BudgetTracker.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAccount(int id)
         {
-            var account = await _context.Accounts.FindAsync(id);
-            if (account == null)
+            var deleted = await _accountService.DeleteAccountAsync(id);
+            if (!deleted)
             {
                 return NotFound();
             }
 
-            _context.Accounts.Remove(account);
-            await _context.SaveChangesAsync();
-
             return NoContent();
-        }
-
-        private bool AccountExists(int id)
-        {
-            return _context.Accounts.Any(e => e.Id == id);
         }
     }
 }

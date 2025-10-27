@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims; 
 using System.Threading.Tasks;
-using BudgetTracker.Data;
 using BudgetTracker.Models.DTOs.Category;
-using BudgetTracker.Models.Entities;
+using BudgetTracker.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace BudgetTracker.Controllers
 {
@@ -16,28 +13,11 @@ namespace BudgetTracker.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly ICategoryService _categoryService;
 
-        public CategoriesController(AppDbContext context)
+        public CategoriesController(ICategoryService categoryService)
         {
-            _context = context;
-        }
-
-        
-        private CategoryViewDto MapToViewDto(Category category)
-        {
-            return new CategoryViewDto
-            {
-                Id = category.Id,
-                Name = category.Name,
-                Description = category.Description,
-                ParentCategoryId = category.ParentCategoryId,
-                ParentCategoryName = category.ParentCategory?.Name, 
-                CreatedAt = category.CreatedAt,
-                ModifiedAt = category.ModifiedAt,
-
-                SubCategories = null // Избягваме цикъл
-            };
+            _categoryService = categoryService;
         }
 
         // 1. GET ALL: /api/Categories
@@ -45,12 +25,7 @@ namespace BudgetTracker.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<CategoryViewDto>>> GetCategories()
         {
-            var categories = await _context.Categories
-                .Include(c => c.ParentCategory)
-                .ToListAsync();
-
-            var categoryDtos = categories.Select(c => MapToViewDto(c)).ToList();
-
+            var categoryDtos = await _categoryService.GetAllCategoriesAsync();
             return Ok(categoryDtos);
         }
 
@@ -60,16 +35,12 @@ namespace BudgetTracker.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<CategoryViewDto>> GetCategory(int id)
         {
-            var category = await _context.Categories
-                .Include(c => c.ParentCategory)
-                .FirstOrDefaultAsync(c => c.Id == id);
+            var categoryDto = await _categoryService.GetCategoryByIdAsync(id);
 
-            if (category == null)
+            if (categoryDto == null)
             {
                 return NotFound();
             }
-
-            var categoryDto = MapToViewDto(category);
 
             return Ok(categoryDto);
         }
@@ -81,34 +52,11 @@ namespace BudgetTracker.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> PutCategory(int id, UpdateCategoryDto updateDto)
         {
-            var existingCategory = await _context.Categories.FindAsync(id);
+            var updated = await _categoryService.UpdateCategoryAsync(id, updateDto);
 
-            if (existingCategory == null)
+            if (!updated)
             {
                 return NotFound();
-            }
-
-            existingCategory.Name = updateDto.Name;
-            existingCategory.Description = updateDto.Description;
-            existingCategory.ParentCategoryId = updateDto.ParentCategoryId;
-            existingCategory.ModifiedAt = DateTime.UtcNow;
-
-            _context.Entry(existingCategory).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CategoryExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
             }
 
             return NoContent();
@@ -121,36 +69,15 @@ namespace BudgetTracker.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)] 
         public async Task<ActionResult<CategoryViewDto>> PostCategory(CreateCategoryDto createDto)
         {
-            // ЛОГИКА ЗА СИГУРНОСТ
             string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(currentUserId))
             {
                 return Unauthorized();
             }
 
-            var category = new Category
-            {
-                Name = createDto.Name,
-                Description = createDto.Description,
-                ParentCategoryId = createDto.ParentCategoryId,
-                UserId = currentUserId 
-            };
+            var createdDto = await _categoryService.CreateCategoryAsync(createDto, currentUserId);
 
-            _context.Categories.Add(category);
-            await _context.SaveChangesAsync();
-
-            
-            var createdDto = new CategoryViewDto
-            {
-                Id = category.Id,
-                Name = category.Name,
-                Description = category.Description,
-                ParentCategoryId = category.ParentCategoryId,
-                CreatedAt = category.CreatedAt,
-                ModifiedAt = category.ModifiedAt
-            };
-
-            return CreatedAtAction(nameof(GetCategory), new { id = category.Id }, createdDto);
+            return CreatedAtAction(nameof(GetCategory), new { id = createdDto.Id }, createdDto);
         }
 
         // 5. DELETE: /api/Categories/5
@@ -159,21 +86,13 @@ namespace BudgetTracker.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteCategory(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
-            if (category == null)
+            var deleted = await _categoryService.DeleteCategoryAsync(id);
+            if (!deleted)
             {
                 return NotFound();
             }
 
-            _context.Categories.Remove(category);
-            await _context.SaveChangesAsync();
-
             return NoContent();
-        }
-
-        private bool CategoryExists(int id)
-        {
-            return _context.Categories.Any(e => e.Id == id);
         }
     }
 }

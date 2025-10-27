@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims; 
 using System.Threading.Tasks;
-using BudgetTracker.Data;
 using BudgetTracker.Models.DTOs.Budget;
-using BudgetTracker.Models.Entities;
+using BudgetTracker.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace BudgetTracker.Controllers
 {
@@ -16,32 +13,11 @@ namespace BudgetTracker.Controllers
     [ApiController]
     public class BudgetsController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IBudgetService _budgetService;
 
-        public BudgetsController(AppDbContext context)
+        public BudgetsController(IBudgetService budgetService)
         {
-            _context = context;
-        }
-
-        
-        private BudgetViewDto MapToViewDto(Budget budget)
-        {
-            return new BudgetViewDto
-            {
-                Id = budget.Id,
-                BudgetAmount = budget.BudgetAmount,
-                StartDate = budget.StartDate,
-                EndDate = budget.EndDate,
-                CreatedAt = budget.CreatedAt,
-                ModifiedAt = budget.ModifiedAt,
-
-                
-                SpentAmount = 0,
-                IncomeAmount = 0,
-                RemainingAmount = 0,
-                InLimit = true,
-                Exceeded = false
-            };
+            _budgetService = budgetService;
         }
 
         // 1. GET ALL: /api/Budgets
@@ -49,9 +25,7 @@ namespace BudgetTracker.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<BudgetViewDto>>> GetBudgets()
         {
-            var budgets = await _context.Budgets.ToListAsync();
-            var budgetDtos = budgets.Select(b => MapToViewDto(b)).ToList();
-
+            var budgetDtos = await _budgetService.GetAllBudgetsAsync();
             return Ok(budgetDtos);
         }
 
@@ -61,14 +35,13 @@ namespace BudgetTracker.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<BudgetViewDto>> GetBudget(int id)
         {
-            var budget = await _context.Budgets.FindAsync(id);
+            var budgetDto = await _budgetService.GetBudgetByIdAsync(id);
 
-            if (budget == null)
+            if (budgetDto == null)
             {
                 return NotFound();
             }
 
-            var budgetDto = MapToViewDto(budget);
             return Ok(budgetDto);
         }
 
@@ -84,34 +57,11 @@ namespace BudgetTracker.Controllers
                 return BadRequest(new { error = errorMessage });
             }
 
-            var existingBudget = await _context.Budgets.FindAsync(id);
+            var updated = await _budgetService.UpdateBudgetAsync(id, updateDto);
 
-            if (existingBudget == null)
+            if (!updated)
             {
                 return NotFound();
-            }
-
-            existingBudget.BudgetAmount = updateDto.BudgetAmount;
-            existingBudget.StartDate = updateDto.StartDate;
-            existingBudget.EndDate = updateDto.EndDate;
-            existingBudget.ModifiedAt = DateTime.UtcNow;
-
-            _context.Entry(existingBudget).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BudgetExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
             }
 
             return NoContent();
@@ -129,29 +79,15 @@ namespace BudgetTracker.Controllers
                 return BadRequest(new { error = errorMessage });
             }
 
-            
             string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(currentUserId))
             {
                 return Unauthorized();
             }
 
-            var budget = new Budget
-            {
-                BudgetAmount = createDto.BudgetAmount,
-                StartDate = createDto.StartDate,
-                EndDate = createDto.EndDate,
+            var createdDto = await _budgetService.CreateBudgetAsync(createDto, currentUserId);
 
-                UserId = currentUserId, 
-                Currency = "BGN" 
-            };
-
-            _context.Budgets.Add(budget);
-            await _context.SaveChangesAsync();
-
-            var createdDto = MapToViewDto(budget);
-
-            return CreatedAtAction(nameof(GetBudget), new { id = budget.Id }, createdDto);
+            return CreatedAtAction(nameof(GetBudget), new { id = createdDto.Id }, createdDto);
         }
 
         // 5. DELETE: /api/Budgets/5
@@ -160,21 +96,13 @@ namespace BudgetTracker.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteBudget(int id)
         {
-            var budget = await _context.Budgets.FindAsync(id);
-            if (budget == null)
+            var deleted = await _budgetService.DeleteBudgetAsync(id);
+            if (!deleted)
             {
                 return NotFound();
             }
 
-            _context.Budgets.Remove(budget);
-            await _context.SaveChangesAsync();
-
             return NoContent();
-        }
-
-        private bool BudgetExists(int id)
-        {
-            return _context.Budgets.Any(e => e.Id == id);
         }
     }
 }
