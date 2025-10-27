@@ -2,6 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using BudgetTracker.Data;
 using BudgetTracker.Models.Entities;
+using BudgetTracker.Repositories.Interfaces;
+using BudgetTracker.Repositories.Implementations;
+using BudgetTracker.Services.Interfaces;
+using BudgetTracker.Services.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +15,18 @@ var connectionString = builder.Configuration.GetConnectionString("AppDbContextCo
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
+
+// --- Register Repositories ---
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IBudgetRepository, BudgetRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+
+// --- Register Services ---
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IBudgetService, BudgetService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ITransactionService, TransactionService>();
 
 // --- Identity with Roles ---
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
