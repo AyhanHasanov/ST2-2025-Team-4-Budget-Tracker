@@ -16,24 +16,30 @@ namespace BudgetTracker.Repositories.Implementations
 
         public async Task<IEnumerable<Budget>> GetAllAsync()
         {
-            return await _context.Budgets.ToListAsync();
+            return await _context.Budgets
+                .Include(b => b.Account)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<Budget>> GetAllByUserIdAsync(string userId)
         {
             return await _context.Budgets
+                .Include(b => b.Account)
                 .Where(b => b.UserId == userId)
                 .ToListAsync();
         }
 
         public async Task<Budget?> GetByIdAsync(int id)
         {
-            return await _context.Budgets.FindAsync(id);
+            return await _context.Budgets
+                .Include(b => b.Account)
+                .FirstOrDefaultAsync(b => b.Id == id);
         }
 
         public async Task<Budget?> GetByIdWithTransactionsAsync(int id)
         {
             return await _context.Budgets
+                .Include(b => b.Account)
                 .Include(b => b.Transactions)
                 .FirstOrDefaultAsync(b => b.Id == id);
         }

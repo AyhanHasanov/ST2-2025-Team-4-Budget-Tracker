@@ -8,10 +8,17 @@ namespace BudgetTracker.Services.Implementations
     public class AccountService : IAccountService
     {
         private readonly IAccountRepository _accountRepository;
+        private readonly IBudgetRepository _budgetRepository;
+        private readonly ITransactionRepository _transactionRepository;
 
-        public AccountService(IAccountRepository accountRepository)
+        public AccountService(
+            IAccountRepository accountRepository,
+            IBudgetRepository budgetRepository,
+            ITransactionRepository transactionRepository)
         {
             _accountRepository = accountRepository;
+            _budgetRepository = budgetRepository;
+            _transactionRepository = transactionRepository;
         }
 
         public async Task<IEnumerable<AccountViewDto>> GetAllAccountsAsync()
@@ -73,6 +80,30 @@ namespace BudgetTracker.Services.Implementations
                 return false;
             }
 
+            // Manually cascade delete: Delete all transactions for this account
+            var transactions = await _transactionRepository.GetAllByAccountIdAsync(id);
+            foreach (var transaction in transactions)
+            {
+                await _transactionRepository.DeleteAsync(transaction);
+            }
+
+            // Manually cascade delete: Delete all budgets for this account
+            var budgets = await _budgetRepository.GetAllAsync();
+            var accountBudgets = budgets.Where(b => b.AccountId == id).ToList();
+            foreach (var budget in accountBudgets)
+            {
+                // First delete all transactions linked to this budget
+                var budgetTransactions = await _transactionRepository.GetAllByBudgetIdAsync(budget.Id);
+                foreach (var transaction in budgetTransactions)
+                {
+                    await _transactionRepository.DeleteAsync(transaction);
+                }
+                
+                // Then delete the budget
+                await _budgetRepository.DeleteAsync(budget);
+            }
+
+            // Finally, delete the account
             await _accountRepository.DeleteAsync(account);
             return true;
         }

@@ -1,16 +1,47 @@
-# This is a sample Python script.
+"""
+Main entry point for the LLM Budget Advisor service.
+Run this file to start the FastAPI server.
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+Usage:
+    python main.py
 
+Requirements:
+    - Ollama must be running on http://localhost:11434
+    - Model qwen3:1.7b must be installed in Ollama
+    
+To install the model:
+    ollama pull qwen3:1.7b
+"""
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+import uvicorn
+import logging
 
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+if __name__ == "__main__":
+    logger.info("=" * 60)
+    logger.info("Starting LLM Budget Advisor Service")
+    logger.info("=" * 60)
+    logger.info("Service will be available at: http://localhost:8000")
+    logger.info("API Documentation: http://localhost:8000/docs")
+    logger.info("Health Check: http://localhost:8000/health")
+    logger.info("")
+    logger.info("IMPORTANT:")
+    logger.info("  - Ollama must be running on http://localhost:11434")
+    logger.info("  - Model 'qwen3:1.7b' must be installed")
+    logger.info("  - To install: ollama pull qwen3:1.7b")
+    logger.info("=" * 60)
+    
+    # Run the FastAPI application
+    uvicorn.run(
+        "llm_service.main:app",
+        host="0.0.0.0",
+        port=8000,
+        reload=True,
+        log_level="info"
+    )

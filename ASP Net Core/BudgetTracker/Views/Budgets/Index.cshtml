@@ -1,0 +1,113 @@
+@model IEnumerable<BudgetTracker.Models.DTOs.Budget.BudgetViewDto>
+
+@{
+    ViewData["Title"] = "Budgets";
+}
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h2 class="mb-3">
+                <i class="fas fa-chart-pie"></i> My Budgets
+            </h2>
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Create New Budget
+            </a>
+        </div>
+    </div>
+
+    @if (Model.Any())
+    {
+        <div class="row">
+            @foreach (var budget in Model)
+            {
+                var progressPercentage = budget.BudgetAmount > 0 ? (budget.SpentAmount / budget.BudgetAmount * 100) : 0;
+                var progressClass = progressPercentage >= 100 ? "bg-danger" : progressPercentage >= 80 ? "bg-warning" : "bg-success";
+                var statusBadge = budget.Exceeded ? "badge bg-danger" : budget.InLimit ? "badge bg-success" : "badge bg-warning";
+                var statusText = budget.Exceeded ? "Over Budget" : budget.InLimit ? "Within Budget" : "Near Limit";
+
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="card-title">@budget.Name</h5>
+                                <span class="@statusBadge">@statusText</span>
+                            </div>
+                            
+                            <p class="text-muted mb-2">
+                                <i class="fas fa-calendar"></i> 
+                                @budget.StartDate.ToString("MMM dd, yyyy") - @budget.EndDate.ToString("MMM dd, yyyy")
+                            </p>
+
+                            @if (!string.IsNullOrEmpty(budget.AccountName))
+                            {
+                                <p class="text-muted mb-2">
+                                    <i class="fas fa-wallet"></i> 
+                                    <strong>Account:</strong> @budget.AccountName
+                                </p>
+                            }
+                            else
+                            {
+                                <p class="text-muted mb-2">
+                                    <i class="fas fa-wallet"></i> 
+                                    <strong>All Accounts</strong>
+                                </p>
+                            }
+
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Budget Amount:</span>
+                                    <strong>@budget.BudgetAmount.ToString("N2") @budget.Currency</strong>
+                                </div>
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Spent:</span>
+                                    <strong class="text-danger">@budget.SpentAmount.ToString("N2") @budget.Currency</strong>
+                                </div>
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Income:</span>
+                                    <strong class="text-success">@budget.IncomeAmount.ToString("N2") @budget.Currency</strong>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Remaining:</span>
+                                    <strong class="@(budget.RemainingAmount >= 0 ? "text-success" : "text-danger")">
+                                        @budget.RemainingAmount.ToString("N2") @budget.Currency
+                                    </strong>
+                                </div>
+                            </div>
+
+                            <div class="progress" style="height: 25px;">
+                                <div class="progress-bar @progressClass" role="progressbar" 
+                                     style="width: @Math.Min(progressPercentage, 100)%" 
+                                     aria-valuenow="@progressPercentage" aria-valuemin="0" aria-valuemax="100">
+                                    @progressPercentage.ToString("F1")%
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white">
+                            <a asp-action="Details" asp-route-id="@budget.Id" class="btn btn-sm btn-info">
+                                <i class="fas fa-eye"></i> Details
+                            </a>
+                            <a asp-action="Edit" asp-route-id="@budget.Id" class="btn btn-sm btn-warning">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@budget.Id" class="btn btn-sm btn-danger">
+                                <i class="fas fa-trash"></i> Delete
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            <i class="fas fa-info-circle"></i> You don't have any budgets yet. Click "Create New Budget" to get started.
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+}
+

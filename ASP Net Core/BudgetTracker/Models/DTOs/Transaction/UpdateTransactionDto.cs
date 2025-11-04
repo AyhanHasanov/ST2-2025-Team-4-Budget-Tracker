@@ -9,11 +9,6 @@ namespace BudgetTracker.Models.DTOs.Transaction
         public decimal Amount { get; set; }
 
         [Required]
-        [StringLength(3, MinimumLength = 3, ErrorMessage = "Currency must be a 3-letter ISO code")]
-        [RegularExpression(@"^[A-Z]{3}$", ErrorMessage = "Currency must be 3 uppercase letters")]
-        public string Currency { get; set; } = "BGN";
-
-        [Required]
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 

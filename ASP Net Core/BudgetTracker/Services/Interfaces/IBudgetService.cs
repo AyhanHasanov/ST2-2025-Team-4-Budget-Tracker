@@ -11,6 +11,7 @@ namespace BudgetTracker.Services.Interfaces
         Task<bool> UpdateBudgetAsync(int id, UpdateBudgetDto updateDto);
         Task<bool> DeleteBudgetAsync(int id);
         Task<bool> BudgetExistsAsync(int id);
+        Task RecalculateBudgetStatisticsAsync(int budgetId);
     }
 }
 

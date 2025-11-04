@@ -15,6 +15,7 @@
         public int? CategoryId { get; set; }
         public string? CategoryName { get; set; }
         public int? BudgetId { get; set; }
+        public string? BudgetName { get; set; }
         
         // Audit fields
         public DateTime CreatedAt { get; set; }

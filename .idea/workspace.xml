@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="1017c8b5-6390-4ec5-9f10-b5efc5d2e455" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Controllers/AccountsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Controllers/AccountsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Controllers/BudgetsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Controllers/BudgetsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Controllers/CategoriesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Controllers/CategoriesController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Controllers/TransactionsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Controllers/TransactionsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Data/AppDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Data/AppDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Migrations/AppDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Migrations/AppDbContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Models/DTOs/Account/CreateAccountDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Models/DTOs/Account/CreateAccountDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Models/DTOs/Account/UpdateAccountDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Models/DTOs/Account/UpdateAccountDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Models/DTOs/Budget/BudgetViewDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Models/DTOs/Budget/BudgetViewDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Models/DTOs/Budget/CreateBudgetDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Models/DTOs/Budget/CreateBudgetDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Models/DTOs/Budget/UpdateBudgetDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Models/DTOs/Budget/UpdateBudgetDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Models/DTOs/Transaction/CreateTransactionDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Models/DTOs/Transaction/CreateTransactionDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Models/DTOs/Transaction/TransactionViewDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Models/DTOs/Transaction/TransactionViewDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Models/DTOs/Transaction/UpdateTransactionDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Models/DTOs/Transaction/UpdateTransactionDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Models/Entities/Budget.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Models/Entities/Budget.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Models/Entities/Transaction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Models/Entities/Transaction.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Repositories/BudgetRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Repositories/BudgetRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Repositories/TransactionRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Repositories/TransactionRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Services/AccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Services/AccountService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Services/BudgetService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Services/BudgetService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Services/Interfaces/IBudgetService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Services/Interfaces/IBudgetService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Services/TransactionService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Services/TransactionService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/Views/Shared/_Layout.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/bin/Debug/net8.0/BudgetTracker.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/bin/Debug/net8.0/BudgetTracker.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/bin/Debug/net8.0/BudgetTracker.exe" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/bin/Debug/net8.0/BudgetTracker.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/bin/Debug/net8.0/BudgetTracker.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/bin/Debug/net8.0/BudgetTracker.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/bin/Debug/net8.0/BudgetTracker.staticwebassets.endpoints.json" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/bin/Debug/net8.0/BudgetTracker.staticwebassets.endpoints.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/obj/Debug/net8.0/ApiEndpoints.json" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/obj/Debug/net8.0/ApiEndpoints.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/obj/Debug/net8.0/BudgetTracker.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/obj/Debug/net8.0/BudgetTracker.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/obj/Debug/net8.0/BudgetTracker.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/obj/Debug/net8.0/BudgetTracker.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/obj/Debug/net8.0/BudgetTracker.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/obj/Debug/net8.0/BudgetTracker.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/obj/Debug/net8.0/BudgetTracker.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/obj/Debug/net8.0/BudgetTracker.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/obj/Debug/net8.0/BudgetTracker.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/obj/Debug/net8.0/BudgetTracker.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/obj/Debug/net8.0/BudgetTracker.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/obj/Debug/net8.0/BudgetTracker.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/obj/Debug/net8.0/BudgetTracker.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/obj/Debug/net8.0/BudgetTracker.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/obj/Debug/net8.0/apphost.exe" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/obj/Debug/net8.0/apphost.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/obj/Debug/net8.0/ref/BudgetTracker.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/obj/Debug/net8.0/ref/BudgetTracker.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/obj/Debug/net8.0/refint/BudgetTracker.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/obj/Debug/net8.0/refint/BudgetTracker.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/obj/Debug/net8.0/staticwebassets.build.endpoints.json" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/obj/Debug/net8.0/staticwebassets.build.endpoints.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/obj/Debug/net8.0/staticwebassets.build.json" beforeDir="false" afterPath="$PROJECT_DIR$/ASP Net Core/BudgetTracker/obj/Debug/net8.0/staticwebassets.build.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "AyhanHasanov"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/AyhanHasanov/ST2-2025-Team-4-Budget-Tracker.git",
+    "accountId": "1684748c-76a4-4c2e-ad07-edc86653a771"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 3
+}]]></component>
+  <component name="ProjectId" id="34hmIZgsqr5HPyDEtZdnrYexfkd" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "Validate-RSC",
+    "last_opened_file_path": "C:/Users/Ayhan/Documents/GitHub/ST2-2025-Team-4-Budget-Tracker/Python Service",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-PY-243.25659.43" />
+        <option value="bundled-python-sdk-181015f7ab06-4df51de95216-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.25659.43" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1017c8b5-6390-4ec5-9f10-b5efc5d2e455" name="Changes" comment="" />
+      <created>1761674099885</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1761674099885</updated>
+      <workItem from="1761674101669" duration="61000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

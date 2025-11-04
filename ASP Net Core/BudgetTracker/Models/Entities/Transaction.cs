@@ -11,10 +11,6 @@ namespace BudgetTracker.Models.Entities
         public decimal Amount { get; set; }
 
         [Required]
-        [StringLength(3, MinimumLength = 3)]
-        public string Currency { get; set; } = "BGN"; // ISO currency code
-
-        [Required]
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 

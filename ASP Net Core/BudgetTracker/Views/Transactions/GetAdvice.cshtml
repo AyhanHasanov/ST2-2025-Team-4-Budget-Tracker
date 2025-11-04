@@ -1,0 +1,163 @@
+@{
+    ViewData["Title"] = "AI Budgeting Advice";
+    var accountName = ViewBag.AccountName as string;
+    var currency = ViewBag.Currency as string;
+    var accountId = ViewBag.AccountId as int?;
+    var advice = ViewBag.Advice as string;
+    var question = ViewBag.Question as string;
+}
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-action="Index">Transactions</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">AI Advice</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h2 class="mb-3">
+                <i class="fas fa-lightbulb"></i> AI-Powered Budgeting Advice
+            </h2>
+            <p class="text-muted">Account: <strong>@accountName (@currency)</strong></p>
+        </div>
+    </div>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-triangle"></i> @TempData["Error"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- Ask Question Form -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-question-circle"></i> Ask Your Question
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="GetAdvice" method="post">
+                        <input type="hidden" name="accountId" value="@accountId" />
+                        <div class="mb-3">
+                            <label for="question" class="form-label">
+                                What would you like advice on?
+                            </label>
+                            <textarea class="form-control" 
+                                      id="question" 
+                                      name="question" 
+                                      rows="3" 
+                                      placeholder="e.g., How can I reduce my monthly expenses? What areas should I focus on for better savings?"
+                                      required
+                                      minlength="5"
+                                      maxlength="500">@question</textarea>
+                            <div class="form-text">
+                                Ask any question about your spending habits or how to improve your budget (5-500 characters).
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="fas fa-brain"></i> Get AI Advice
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(advice))
+    {
+        <!-- AI Advice Card -->
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card shadow-lg border-success">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0">
+                            <i class="fas fa-robot"></i> AI Response
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <h5><i class="fas fa-question-circle"></i> Your Question</h5>
+                                <div class="alert alert-light border">
+                                    <em>"@question"</em>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5><i class="fas fa-comment-dots"></i> AI Advice</h5>
+                                <div class="alert alert-success border" style="font-size: 1.1rem; line-height: 1.8;">
+                                    @advice
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle"></i> <strong>Note:</strong> This advice is generated by AI based on your expense data. 
+                                    Always consider your personal financial situation and consult with a financial advisor for major decisions.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="row mb-4">
+        <div class="col-md-12 text-center">
+            <a asp-action="Index" asp-route-accountId="@accountId" class="btn btn-secondary me-2">
+                <i class="fas fa-arrow-left"></i> Back to Transactions
+            </a>
+            <a asp-action="GetSummary" asp-route-accountId="@accountId" class="btn btn-info">
+                <i class="fas fa-chart-line"></i> View AI Summary
+            </a>
+        </div>
+    </div>
+
+    <!-- Example Questions -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="mb-0">
+                        <i class="fas fa-lightbulb"></i> Example Questions You Can Ask
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">How can I reduce my monthly expenses?</li>
+                        <li class="list-group-item">What category am I overspending in?</li>
+                        <li class="list-group-item">How can I save more money each month?</li>
+                        <li class="list-group-item">What's the best way to stick to my budget?</li>
+                        <li class="list-group-item">Should I cut back on any specific category?</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
