@@ -1,0 +1,120 @@
+@model BudgetTracker.Models.DTOs.Budget.UpdateBudgetDto
+
+@{
+    ViewData["Title"] = "Edit Budget";
+    var accounts = ViewBag.Accounts as IEnumerable<BudgetTracker.Models.DTOs.Account.AccountViewDto>;
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow">
+                <div class="card-header bg-warning text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-edit"></i> Edit Budget
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        
+                        <div class="form-group mb-3">
+                            <label asp-for="Name" class="form-label">Budget Name</label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="BudgetAmount" class="form-label">Budget Amount</label>
+                            <div class="input-group">
+                                <input asp-for="BudgetAmount" class="form-control" type="number" step="0.01" />
+                                <span class="input-group-text" id="budgetCurrency">Select Account</span>
+                            </div>
+                            <span asp-validation-for="BudgetAmount" class="text-danger"></span>
+                            <small class="form-text text-muted">Currency will match the selected account (or BGN if no account selected)</small>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="AccountId" class="form-label">Account</label>
+                            <select asp-for="AccountId" class="form-select">
+                                <option value="">-- No specific account (All accounts) --</option>
+                                @if (accounts != null)
+                                {
+                                    @foreach (var account in accounts)
+                                    {
+                                        <option value="@account.Id">@account.Name (@account.Balance.ToString("N2") @account.Currency)</option>
+                                    }
+                                }
+                            </select>
+                            <span asp-validation-for="AccountId" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label asp-for="StartDate" class="form-label">Start Date</label>
+                                    <input asp-for="StartDate" class="form-control" type="date" />
+                                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label asp-for="EndDate" class="form-label">End Date</label>
+                                    <input asp-for="EndDate" class="form-control" type="date" />
+                                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-warning" role="alert">
+                            <i class="fas fa-exclamation-triangle"></i> <strong>Warning:</strong> Changing the budget dates may affect transaction associations.
+                        </div>
+
+                        <div class="form-group mt-4">
+                            <button type="submit" class="btn btn-warning">
+                                <i class="fas fa-save"></i> Save Changes
+                            </button>
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        // Update currency display when account changes
+        document.getElementById('AccountId').addEventListener('change', function() {
+            var selectedOption = this.options[this.selectedIndex];
+            if (selectedOption.value) {
+                // Extract currency from the option text (e.g., "Account Name (1000.00 EUR)")
+                var text = selectedOption.text;
+                var currencyMatch = text.match(/\([\d,.]+\s+([A-Z]{3})\)/);
+                if (currencyMatch) {
+                    document.getElementById('budgetCurrency').textContent = currencyMatch[1];
+                }
+            } else {
+                document.getElementById('budgetCurrency').textContent = 'BGN (default)';
+            }
+        });
+        
+        // Set initial currency on page load
+        var initialAccountId = document.getElementById('AccountId').value;
+        if (initialAccountId) {
+            var initialOption = document.querySelector('#AccountId option[value="' + initialAccountId + '"]');
+            if (initialOption) {
+                var text = initialOption.text;
+                var currencyMatch = text.match(/\([\d,.]+\s+([A-Z]{3})\)/);
+                if (currencyMatch) {
+                    document.getElementById('budgetCurrency').textContent = currencyMatch[1];
+                }
+            }
+        }
+    </script>
+}
+

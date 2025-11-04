@@ -56,6 +56,66 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Ayhan/Documents/GitHub/ST2-2025-Team-4-Budget-Tracker/ASP Net Core/BudgetTracker/Views/Accounts/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ayhan/Documents/GitHub/ST2-2025-Team-4-Budget-Tracker/ASP Net Core/BudgetTracker/Views/Accounts/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudHNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ayhan/Documents/GitHub/ST2-2025-Team-4-Budget-Tracker/ASP Net Core/BudgetTracker/Views/Accounts/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ayhan/Documents/GitHub/ST2-2025-Team-4-Budget-Tracker/ASP Net Core/BudgetTracker/Views/Accounts/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ayhan/Documents/GitHub/ST2-2025-Team-4-Budget-Tracker/ASP Net Core/BudgetTracker/Views/Accounts/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ayhan/Documents/GitHub/ST2-2025-Team-4-Budget-Tracker/ASP Net Core/BudgetTracker/Views/Budgets/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVkZ2V0c1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ayhan/Documents/GitHub/ST2-2025-Team-4-Budget-Tracker/ASP Net Core/BudgetTracker/Views/Budgets/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVkZ2V0c1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ayhan/Documents/GitHub/ST2-2025-Team-4-Budget-Tracker/ASP Net Core/BudgetTracker/Views/Budgets/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVkZ2V0c1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ayhan/Documents/GitHub/ST2-2025-Team-4-Budget-Tracker/ASP Net Core/BudgetTracker/Views/Budgets/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVkZ2V0c1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ayhan/Documents/GitHub/ST2-2025-Team-4-Budget-Tracker/ASP Net Core/BudgetTracker/Views/Budgets/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVkZ2V0c1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ayhan/Documents/GitHub/ST2-2025-Team-4-Budget-Tracker/ASP Net Core/BudgetTracker/Views/Categories/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmllc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ayhan/Documents/GitHub/ST2-2025-Team-4-Budget-Tracker/ASP Net Core/BudgetTracker/Views/Categories/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmllc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ayhan/Documents/GitHub/ST2-2025-Team-4-Budget-Tracker/ASP Net Core/BudgetTracker/Views/Categories/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmllc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ayhan/Documents/GitHub/ST2-2025-Team-4-Budget-Tracker/ASP Net Core/BudgetTracker/Views/Categories/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmllc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ayhan/Documents/GitHub/ST2-2025-Team-4-Budget-Tracker/ASP Net Core/BudgetTracker/Views/Categories/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmllc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Ayhan/Documents/GitHub/ST2-2025-Team-4-Budget-Tracker/ASP Net Core/BudgetTracker/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -74,6 +134,34 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Ayhan/Documents/GitHub/ST2-2025-Team-4-Budget-Tracker/ASP Net Core/BudgetTracker/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ayhan/Documents/GitHub/ST2-2025-Team-4-Budget-Tracker/ASP Net Core/BudgetTracker/Views/Transactions/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhbnNhY3Rpb25zXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ayhan/Documents/GitHub/ST2-2025-Team-4-Budget-Tracker/ASP Net Core/BudgetTracker/Views/Transactions/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhbnNhY3Rpb25zXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ayhan/Documents/GitHub/ST2-2025-Team-4-Budget-Tracker/ASP Net Core/BudgetTracker/Views/Transactions/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhbnNhY3Rpb25zXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ayhan/Documents/GitHub/ST2-2025-Team-4-Budget-Tracker/ASP Net Core/BudgetTracker/Views/Transactions/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhbnNhY3Rpb25zXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ayhan/Documents/GitHub/ST2-2025-Team-4-Budget-Tracker/ASP Net Core/BudgetTracker/Views/Transactions/GetAdvice.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhbnNhY3Rpb25zXEdldEFkdmljZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ayhan/Documents/GitHub/ST2-2025-Team-4-Budget-Tracker/ASP Net Core/BudgetTracker/Views/Transactions/GetSummary.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhbnNhY3Rpb25zXEdldFN1bW1hcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Ayhan/Documents/GitHub/ST2-2025-Team-4-Budget-Tracker/ASP Net Core/BudgetTracker/Views/Transactions/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhbnNhY3Rpb25zXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Ayhan/Documents/GitHub/ST2-2025-Team-4-Budget-Tracker/ASP Net Core/BudgetTracker/Views/_ViewImports.cshtml]

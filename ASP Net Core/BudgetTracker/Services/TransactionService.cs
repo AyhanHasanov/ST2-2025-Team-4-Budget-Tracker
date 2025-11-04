@@ -9,13 +9,16 @@ namespace BudgetTracker.Services.Implementations
     {
         private readonly ITransactionRepository _transactionRepository;
         private readonly IAccountRepository _accountRepository;
+        private readonly IBudgetRepository _budgetRepository;
 
         public TransactionService(
             ITransactionRepository transactionRepository,
-            IAccountRepository accountRepository)
+            IAccountRepository accountRepository,
+            IBudgetRepository budgetRepository)
         {
             _transactionRepository = transactionRepository;
             _accountRepository = accountRepository;
+            _budgetRepository = budgetRepository;
         }
 
         public async Task<IEnumerable<TransactionViewDto>> GetAllTransactionsAsync()
@@ -67,7 +70,6 @@ namespace BudgetTracker.Services.Implementations
             var transaction = new Transaction
             {
                 Amount = createDto.Amount,
-                Currency = createDto.Currency,
                 Date = createDto.Date,
                 Description = createDto.Description,
                 Type = createDto.Type,
@@ -96,25 +98,53 @@ namespace BudgetTracker.Services.Implementations
                 return false;
             }
 
-            var account = await _accountRepository.GetByIdAsync(existingTransaction.AccountId);
-            if (account == null)
+            var oldAccount = await _accountRepository.GetByIdAsync(existingTransaction.AccountId);
+            if (oldAccount == null)
             {
-                return false; // Account not found
+                return false; // Old account not found
             }
 
-            // Reverse the old transaction's effect on the account balance
-            UpdateAccountBalance(account, existingTransaction.Amount, existingTransaction.Type, isReversal: true);
+            // Reverse the old transaction's effect on the old account balance
+            UpdateAccountBalance(oldAccount, existingTransaction.Amount, existingTransaction.Type, isReversal: true);
 
-            // Update transaction properties
-            existingTransaction.Amount = updateDto.Amount;
-            existingTransaction.Currency = updateDto.Currency;
-            existingTransaction.Date = updateDto.Date;
-            existingTransaction.Description = updateDto.Description;
-            existingTransaction.Type = updateDto.Type;
-            existingTransaction.ModifiedAt = DateTime.UtcNow;
+            // If the account is changing, get the new account
+            if (existingTransaction.AccountId != updateDto.AccountId)
+            {
+                var newAccount = await _accountRepository.GetByIdAsync(updateDto.AccountId);
+                if (newAccount == null)
+                {
+                    // Restore the old account balance since we're failing
+                    UpdateAccountBalance(oldAccount, existingTransaction.Amount, existingTransaction.Type, isReversal: false);
+                    return false; // New account not found
+                }
 
-            // Apply the new transaction's effect on the account balance
-            UpdateAccountBalance(account, existingTransaction.Amount, existingTransaction.Type, isReversal: false);
+                // Update transaction properties including account
+                existingTransaction.AccountId = updateDto.AccountId;
+                existingTransaction.Amount = updateDto.Amount;
+                existingTransaction.Date = updateDto.Date;
+                existingTransaction.Description = updateDto.Description;
+                existingTransaction.Type = updateDto.Type;
+                existingTransaction.CategoryId = updateDto.CategoryId;
+                existingTransaction.BudgetId = updateDto.BudgetId;
+                existingTransaction.ModifiedAt = DateTime.UtcNow;
+
+                // Apply the new transaction's effect on the new account balance
+                UpdateAccountBalance(newAccount, existingTransaction.Amount, existingTransaction.Type, isReversal: false);
+            }
+            else
+            {
+                // Same account, just update the transaction properties
+                existingTransaction.Amount = updateDto.Amount;
+                existingTransaction.Date = updateDto.Date;
+                existingTransaction.Description = updateDto.Description;
+                existingTransaction.Type = updateDto.Type;
+                existingTransaction.CategoryId = updateDto.CategoryId;
+                existingTransaction.BudgetId = updateDto.BudgetId;
+                existingTransaction.ModifiedAt = DateTime.UtcNow;
+
+                // Apply the new transaction's effect on the same account balance
+                UpdateAccountBalance(oldAccount, existingTransaction.Amount, existingTransaction.Type, isReversal: false);
+            }
 
             await _transactionRepository.UpdateAsync(existingTransaction);
             return true;
@@ -162,7 +192,7 @@ namespace BudgetTracker.Services.Implementations
             {
                 Id = transaction.Id,
                 Amount = transaction.Amount,
-                Currency = transaction.Currency,
+                Currency = transaction.Account?.Currency ?? "BGN",
                 Date = transaction.Date,
                 Description = transaction.Description,
                 Type = transaction.Type,
@@ -171,6 +201,7 @@ namespace BudgetTracker.Services.Implementations
                 CategoryId = transaction.CategoryId,
                 CategoryName = transaction.Category?.Name,
                 BudgetId = transaction.BudgetId,
+                BudgetName = transaction.Budget?.Name,
                 CreatedAt = transaction.CreatedAt,
                 ModifiedAt = transaction.ModifiedAt
             };

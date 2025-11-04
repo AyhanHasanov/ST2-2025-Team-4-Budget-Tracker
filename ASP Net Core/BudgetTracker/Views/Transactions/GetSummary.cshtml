@@ -1,0 +1,195 @@
+@model IEnumerable<BudgetTracker.Models.DTOs.Transaction.TransactionViewDto>
+
+@{
+    ViewData["Title"] = "AI Expense Summary";
+    var accountName = ViewBag.AccountName as string;
+    var currency = ViewBag.Currency as string;
+    var summary = ViewBag.Summary as string;
+    var totalAmount = ViewBag.TotalAmount as double?;
+    var expenseCount = ViewBag.ExpenseCount as int?;
+    var budget = ViewBag.Budget as double?;
+    var accountId = ViewBag.AccountId as int?;
+}
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-action="Index">Transactions</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">AI Summary</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h2 class="mb-3">
+                <i class="fas fa-robot"></i> AI-Powered Expense Summary
+            </h2>
+            <p class="text-muted">Account: <strong>@accountName</strong></p>
+        </div>
+    </div>
+
+    <!-- AI Summary Card -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card shadow-lg border-primary">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-brain"></i> AI Analysis
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-4 text-center">
+                            <h6 class="text-muted">Total Expenses</h6>
+                            <h3 class="text-danger">
+                                @totalAmount?.ToString("N2") @currency
+                            </h3>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <h6 class="text-muted">Number of Transactions</h6>
+                            <h3 class="text-primary">
+                                @expenseCount
+                            </h3>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <h6 class="text-muted">Budget</h6>
+                            <h3 class="text-info">
+                                @budget?.ToString("N2") @currency
+                            </h3>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5><i class="fas fa-quote-left"></i> Summary</h5>
+                            <div class="alert alert-light border" style="font-size: 1.1rem; line-height: 1.8;">
+                                @summary
+                            </div>
+                        </div>
+                    </div>
+                    @if (budget.HasValue && totalAmount.HasValue)
+                    {
+                        var remaining = budget.Value - totalAmount.Value;
+                        var percentUsed = (totalAmount.Value / budget.Value) * 100;
+                        var widthPercent = Math.Min(percentUsed, 100);
+                        var progressBarClass = percentUsed > 100 ? "bg-danger" : percentUsed > 80 ? "bg-warning" : "bg-success";
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <h6>Budget Status</h6>
+                                <div class="progress" style="height: 30px;">
+                                    <div class="progress-bar @progressBarClass" 
+                                         role="progressbar" 
+                                         style="width: @(widthPercent)%;" 
+                                         aria-valuenow="@percentUsed" 
+                                         aria-valuemin="0" 
+                                         aria-valuemax="100">
+                                        @percentUsed.ToString("F1")% Used
+                                    </div>
+                                </div>
+                                @if (remaining >= 0)
+                                {
+                                    <p class="mt-2 text-success">
+                                        <i class="fas fa-check-circle"></i> <strong>@remaining.ToString("N2") @currency</strong> remaining in budget
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p class="mt-2 text-danger">
+                                        <i class="fas fa-exclamation-triangle"></i> <strong>@Math.Abs(remaining).ToString("N2") @currency</strong> over budget!
+                                    </p>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Expense Breakdown -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-list"></i> Expense Details
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th><i class="fas fa-calendar"></i> Date</th>
+                                <th><i class="fas fa-tag"></i> Category</th>
+                                <th><i class="fas fa-align-left"></i> Description</th>
+                                <th class="text-end"><i class="fas fa-money-bill"></i> Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.Any())
+                            {
+                                @foreach (var transaction in Model.OrderByDescending(t => t.Date))
+                                {
+                                <tr>
+                                    <td>@transaction.Date.ToString("MMM dd, yyyy")</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(transaction.CategoryName))
+                                        {
+                                            <span class="badge bg-secondary">@transaction.CategoryName</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Uncategorized</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(transaction.Description))
+                                        {
+                                            @transaction.Description
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">No description</span>
+                                        }
+                                    </td>
+                                    <td class="text-end">
+                                        <strong class="text-danger">
+                                            @transaction.Amount.ToString("N2") @currency
+                                        </strong>
+                                    </td>
+                                </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted">No transactions to display</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-12 text-center">
+            <a asp-action="Index" asp-route-accountId="@accountId" class="btn btn-secondary me-2">
+                <i class="fas fa-arrow-left"></i> Back to Transactions
+            </a>
+            <a asp-action="GetAdvice" asp-route-accountId="@accountId" class="btn btn-success">
+                <i class="fas fa-lightbulb"></i> Get AI Advice
+            </a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+}
+

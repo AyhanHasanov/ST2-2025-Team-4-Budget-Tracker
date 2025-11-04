@@ -1,0 +1,104 @@
+@model BudgetTracker.Models.DTOs.Transaction.TransactionViewDto
+
+@{
+    ViewData["Title"] = "Transaction Details";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow">
+                <div class="card-header @(Model.Type == "Income" ? "bg-success" : "bg-danger") text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-@(Model.Type == "Income" ? "arrow-down" : "arrow-up")"></i> Transaction Details
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">Amount</dt>
+                        <dd class="col-sm-8">
+                            <h3 class="@(Model.Type == "Income" ? "text-success" : "text-danger")">
+                                @(Model.Type == "Income" ? "+" : "-")@Model.Amount.ToString("N2") @Model.Currency
+                            </h3>
+                        </dd>
+
+                        <dt class="col-sm-4">Type</dt>
+                        <dd class="col-sm-8">
+                            @if (Model.Type == "Income")
+                            {
+                                <span class="badge bg-success">
+                                    <i class="fas fa-arrow-down"></i> Income
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">
+                                    <i class="fas fa-arrow-up"></i> Expense
+                                </span>
+                            }
+                        </dd>
+
+                        <dt class="col-sm-4">Date</dt>
+                        <dd class="col-sm-8">@Model.Date.ToString("MMMM dd, yyyy")</dd>
+
+                        <dt class="col-sm-4">Account</dt>
+                        <dd class="col-sm-8">
+                            <strong>@Model.AccountName</strong>
+                        </dd>
+
+                        <dt class="col-sm-4">Category</dt>
+                        <dd class="col-sm-8">
+                            @if (!string.IsNullOrEmpty(Model.CategoryName))
+                            {
+                                <span class="badge bg-secondary">@Model.CategoryName</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">Uncategorized</span>
+                            }
+                        </dd>
+
+                        <dt class="col-sm-4">Budget</dt>
+                        <dd class="col-sm-8">
+                            @if (!string.IsNullOrEmpty(Model.BudgetName))
+                            {
+                                <span class="badge bg-info">@Model.BudgetName</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">No budget</span>
+                            }
+                        </dd>
+
+                        @if (!string.IsNullOrEmpty(Model.Description))
+                        {
+                            <dt class="col-sm-4">Description</dt>
+                            <dd class="col-sm-8">@Model.Description</dd>
+                        }
+
+                        <dt class="col-sm-4">Currency</dt>
+                        <dd class="col-sm-8">@Model.Currency</dd>
+
+                        <dt class="col-sm-4">Created At</dt>
+                        <dd class="col-sm-8">@Model.CreatedAt.ToString("MMMM dd, yyyy HH:mm")</dd>
+
+                        <dt class="col-sm-4">Last Modified</dt>
+                        <dd class="col-sm-8">@Model.ModifiedAt.ToString("MMMM dd, yyyy HH:mm")</dd>
+                    </dl>
+                </div>
+                <div class="card-footer bg-white">
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to List
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger float-end">
+                        <i class="fas fa-trash"></i> Delete
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

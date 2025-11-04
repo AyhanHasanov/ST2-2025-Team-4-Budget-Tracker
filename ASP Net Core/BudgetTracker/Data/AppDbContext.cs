@@ -29,6 +29,12 @@ namespace BudgetTracker.Data
                 .HasForeignKey(b => b.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            builder.Entity<Budget>()
+                .HasOne(b => b.Account)
+                .WithMany()
+                .HasForeignKey(b => b.AccountId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             //builder.Entity<AI_Log>()
             //    .HasOne(a => a.User)
             //    .WithMany(u => u.AI_Logs)
@@ -44,7 +50,7 @@ namespace BudgetTracker.Data
                 .HasOne(t => t.Account)
                 .WithMany(a => a.Transactions)
                 .HasForeignKey(t => t.AccountId)
-                .OnDelete(DeleteBehavior.Restrict); // <--- change from Cascade to Restrict
+                .OnDelete(DeleteBehavior.Restrict);
 
 
             builder.Entity<Transaction>()
@@ -53,7 +59,13 @@ namespace BudgetTracker.Data
                 .HasForeignKey(t => t.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-             builder.Entity<Category>()
+            builder.Entity<Transaction>()
+                .HasOne(t => t.Budget)
+                .WithMany(b => b.Transactions)
+                .HasForeignKey(t => t.BudgetId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Category>()
                 .HasOne(c => c.ParentCategory)
                 .WithMany(c => c.SubCategories)
                 .HasForeignKey(c => c.ParentCategoryId)

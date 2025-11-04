@@ -1,0 +1,68 @@
+@model BudgetTracker.Models.DTOs.Category.UpdateCategoryDto
+
+@{
+    ViewData["Title"] = "Edit Category";
+    var categories = ViewBag.Categories as IEnumerable<BudgetTracker.Models.DTOs.Category.CategoryViewDto>;
+    var currentCategoryId = ViewBag.CurrentCategoryId as int?;
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow">
+                <div class="card-header bg-warning text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-edit"></i> Edit Category
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        
+                        <div class="form-group mb-3">
+                            <label asp-for="Name" class="form-label">Category Name</label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Description" class="form-label">Description</label>
+                            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="ParentCategoryId" class="form-label">Parent Category</label>
+                            <select asp-for="ParentCategoryId" class="form-select">
+                                <option value="">-- None (Root Category) --</option>
+                                @if (categories != null)
+                                {
+                                    @foreach (var cat in categories.Where(c => c.Id != currentCategoryId))
+                                    {
+                                        <option value="@cat.Id">@cat.Name</option>
+                                    }
+                                }
+                            </select>
+                            <span asp-validation-for="ParentCategoryId" class="text-danger"></span>
+                            <small class="form-text text-muted">A category cannot be its own parent</small>
+                        </div>
+
+                        <div class="form-group mt-4">
+                            <button type="submit" class="btn btn-warning">
+                                <i class="fas fa-save"></i> Save Changes
+                            </button>
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

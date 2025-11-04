@@ -6,6 +6,7 @@ using BudgetTracker.Repositories.Interfaces;
 using BudgetTracker.Repositories.Implementations;
 using BudgetTracker.Services.Interfaces;
 using BudgetTracker.Services.Implementations;
+using BudgetTracker.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,9 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IBudgetService, BudgetService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
+
+// --- Register HttpClient for LLM Service ---
+builder.Services.AddHttpClient<ILlmService, LlmService>();
 
 // --- Identity with Roles ---
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>

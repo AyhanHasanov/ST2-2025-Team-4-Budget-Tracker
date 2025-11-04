@@ -1,0 +1,66 @@
+@model IEnumerable<BudgetTracker.Models.DTOs.Account.AccountViewDto>
+
+@{
+    ViewData["Title"] = "Accounts";
+}
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h2 class="mb-3">
+                <i class="fas fa-wallet"></i> My Accounts
+            </h2>
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Create New Account
+            </a>
+        </div>
+    </div>
+
+    @if (Model.Any())
+    {
+        <div class="row">
+            @foreach (var account in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">@account.Name</h5>
+                            <h3 class="text-primary">@account.Balance.ToString("N2") @account.Currency</h3>
+                            @if (!string.IsNullOrEmpty(account.Description))
+                            {
+                                <p class="card-text text-muted">@account.Description</p>
+                            }
+                            <div class="mt-3">
+                                <small class="text-muted">
+                                    Created: @account.CreatedAt.ToString("MMM dd, yyyy")
+                                </small>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white">
+                            <a asp-action="Details" asp-route-id="@account.Id" class="btn btn-sm btn-info">
+                                <i class="fas fa-eye"></i> Details
+                            </a>
+                            <a asp-action="Edit" asp-route-id="@account.Id" class="btn btn-sm btn-warning">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@account.Id" class="btn btn-sm btn-danger">
+                                <i class="fas fa-trash"></i> Delete
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            <i class="fas fa-info-circle"></i> You don't have any accounts yet. Click "Create New Account" to get started.
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+}
+

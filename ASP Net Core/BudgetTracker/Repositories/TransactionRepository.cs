@@ -34,6 +34,7 @@ namespace BudgetTracker.Repositories.Implementations
                 .Where(t => t.UserId == userId)
                 .Include(t => t.Account)
                 .Include(t => t.Category)
+                .Include(t => t.Budget)
                 .ToListAsync();
         }
 
@@ -42,6 +43,7 @@ namespace BudgetTracker.Repositories.Implementations
             return await _context.Transactions
                 .Where(t => t.AccountId == accountId)
                 .Include(t => t.Category)
+                .Include(t => t.Budget)
                 .ToListAsync();
         }
 
@@ -50,6 +52,7 @@ namespace BudgetTracker.Repositories.Implementations
             return await _context.Transactions
                 .Where(t => t.CategoryId == categoryId)
                 .Include(t => t.Account)
+                .Include(t => t.Budget)
                 .ToListAsync();
         }
 
